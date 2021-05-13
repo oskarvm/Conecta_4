@@ -2,7 +2,7 @@ package UDP;
 
 import java.io.*;
 import java.net.*;
-import java.util.*;
+import java.util.Scanner;
 
 public class Client {
     /** Client/Jugador que ha d'encertar un numero del ServidorAdivinaUDP_Obj.java -> Comunicació UDP
@@ -40,13 +40,8 @@ public class Client {
             multicastIP = InetAddress.getByName("224.0.0.10");
             groupMulticast = new InetSocketAddress(multicastIP,5557);
             netIf = NetworkInterface.getByName("wlp0s20f3");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
             adrecaDesti = InetAddress.getByName(ipSrv);
-        } catch (UnknownHostException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -65,7 +60,7 @@ public class Client {
         DatagramPacket packet;
         DatagramSocket socket = new DatagramSocket();
         //Missatge de benvinguda
-        System.out.println("Hola " + Nom + "! Comencem!\n Digues un número: ");
+        System.out.println("Hola " + Nom + "! Comencem!");
         //Bucle de joc
         while(result!=0 && result!=-2) {
             Scanner sc = new Scanner(System.in);
@@ -118,10 +113,17 @@ public class Client {
         try {
             ObjectInputStream ois = new ObjectInputStream(in);
             t = (Tauler) ois.readObject();
-            t.map_jugadors.forEach((k,v)-> System.out.println("Intents:" + k + "->" + v));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+            for (int i = 0; i < t.tauler.length; ++i) {
+                System.out.print("|");
+                for(int j = 0; j < t.tauler[i].length; ++j) {
+                    System.out.print(t.tauler[i][j]+"");
+                    System.out.print("|");
+                }
+                System.out.println("");
+            }
+            System.out.println(" ----------------------------");
+            t.map_jugadors.forEach((k,v)-> System.out.println("Torn de: " + k + "->" + v));
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -175,7 +177,7 @@ public class Client {
         }
 
         if(cAdivina.getResult() == 0) {
-            System.out.println("Fi, ho has aconseguit amb "+ cAdivina.t.map_jugadors.get(jugador).intValue() +" intents");
+            System.out.println("Fi, ho has aconseguit amb "+ cAdivina.t.map_jugadors.get(jugador) +" intents");
             cAdivina.t.map_jugadors.forEach((k,v)-> System.out.println(k + "->" + v));
         } else {
             System.out.println("Has perdut");
