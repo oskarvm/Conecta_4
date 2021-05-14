@@ -56,7 +56,7 @@ public class Client {
 
     public void runClient() throws IOException {
         byte [] receivedData = new byte[1024];
-        int n;
+        int tirada;
         DatagramPacket packet;
         DatagramSocket socket = new DatagramSocket();
         //Missatge de benvinguda
@@ -64,9 +64,9 @@ public class Client {
         //Bucle de joc
         while(result!=0 && result!=-2) {
             Scanner sc = new Scanner(System.in);
-            n = sc.nextInt();
+            tirada = sc.nextInt();
             j.Nom = Nom;
-            j.num = n;
+            j.num = tirada;
             //byte[] missatge = ByteBuffer.allocate(4).putInt(n).array();
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(os);

@@ -17,16 +17,12 @@ public class Servidor {
     Tauler tauler;
     MulticastSocket multisocket;
     InetAddress multicastIp;
-    //InetSocketAddress groupMulticast;
-    //NetworkInterface netIf;
 
     public Servidor(int port, int max) {
         try {
             socket = new DatagramSocket(port);
             multisocket = new MulticastSocket(multiport);
             multicastIp = InetAddress.getByName("224.0.0.10");
-            //groupMulticast = new InetSocketAddress(multicastIp,multiport);
-            //netIf = NetworkInterface.getByName("wlp0s20f3");
             NetworkInterface.networkInterfaces().forEach(i -> System.out.println(i.toString()));
         } catch (IOException e) {
             e.printStackTrace();
@@ -81,6 +77,7 @@ public class Servidor {
                 int tirades = tauler.map_jugadors.get(j.Nom) + 1;
                 tauler.map_jugadors.put(j.Nom, tirades);
             }
+
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -93,6 +90,15 @@ public class Servidor {
             acabats++;
             tauler.acabats++;
         }
+
+        for (int i = 0; i < tauler.tauler.length; ++i) {
+            System.out.println("PRINTA");
+            if (tauler.tauler[i][j.num-1].equals(" ~ ")){
+                tauler.tauler[i][j.num-1] = " X ";
+                break;
+            }
+        }
+
         //La resposta és el tauler amb les dades de tots els jugadors
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         ObjectOutputStream oos = null;
