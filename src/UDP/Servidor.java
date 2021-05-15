@@ -91,11 +91,12 @@ public class Servidor {
             tauler.acabats++;
         }
 
-        for (int i = 0; i < tauler.tauler.length; ++i) {
-            System.out.println("PRINTA");
-            if (tauler.tauler[i][j.num-1].equals(" ~ ")){
-                tauler.tauler[i][j.num-1] = " X ";
-                break;
+        if (j.num >0 && j.num<8) {
+            for (int i=tauler.tauler.length-1; i>=0;i--) {
+                if (tauler.tauler[i][j.num - 1].equals(" ~ ")) {
+                    tauler.tauler[i][j.num - 1] = " X ";
+                    break;
+                }
             }
         }
 
