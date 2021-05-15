@@ -16,7 +16,7 @@ public class Client {
 
     private int portDesti;
     private int result;
-    private String Nom, ipSrv;
+    private String Nom, ipSrv, marca;
     private int intents;
     private InetAddress adrecaDesti;
     private Tauler t;
@@ -62,11 +62,12 @@ public class Client {
         //Missatge de benvinguda
         System.out.println("Hola " + Nom + "! Comencem!");
         //Bucle de joc
-        while(result!=0 && result!=-2) {
+        while(result!=0) {
             Scanner sc = new Scanner(System.in);
             tirada = sc.nextInt();
             j.Nom = Nom;
             j.num = tirada;
+            j.marca = marca;
             //byte[] missatge = ByteBuffer.allocate(4).putInt(n).array();
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(os);
@@ -122,7 +123,7 @@ public class Client {
                 System.out.println("");
             }
             System.out.println(" ----------------------------");
-            t.map_jugadors.forEach((k,v)-> System.out.println("Torn de: " + k + "->" + v));
+            t.map_jugadors.forEach((k,v)-> System.out.println("Tirada de: " + k + "->" + v));
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -140,9 +141,8 @@ public class Client {
         setTauler(data);
         String msg = null;
         switch (t.resultat) {
-            case 0: msg = "Correcte"; break;
-            case 1: msg = "Més petit"; break;
-            case 2: msg = "Més gran"; break;
+            case 0: msg = "Has guanyat"; break;
+            case 1: msg = "Continua jugant"; break;
         }
         System.out.println(msg);
         return t.resultat;
@@ -158,7 +158,7 @@ public class Client {
     }
 
     public static void main(String[] args) {
-        String jugador, ipSrv;
+        String jugador, ipSrv, marca;
 
         //Demanem la ip del servidor i nom del jugador
         System.out.println("IP del servidor?");
@@ -166,10 +166,13 @@ public class Client {
         ipSrv = sip.next();
         System.out.println("Nom jugador:");
         jugador = sip.next();
+        System.out.println("Marca casella:");
+        marca = sip.next();
 
         Client cAdivina = new Client(ipSrv, 5556);
 
         cAdivina.setNom(jugador);
+        cAdivina.marca = marca;
         try {
             cAdivina.runClient();
         } catch (IOException e) {

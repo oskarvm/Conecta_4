@@ -82,23 +82,21 @@ public class Servidor {
             e.printStackTrace();
         }
 
-        //comprobar la jugada
-        fi = tauler.resultat = ns.comprova(j.num);
-        if(fi==0) {
-            acabat = true;
-            //augmentem la quantitat de jugadors que l'han encertat/acabat
-            acabats++;
-            tauler.acabats++;
-        }
-
+        //afegir al tauler
         if (j.num >0 && j.num<8) {
             for (int i=tauler.tauler.length-1; i>=0;i--) {
                 if (tauler.tauler[i][j.num - 1].equals(" ~ ")) {
-                    tauler.tauler[i][j.num - 1] = " X ";
+                    tauler.tauler[i][j.num - 1] = " "+j.marca+" ";
                     break;
                 }
             }
         }
+        //comprovació
+        boolean guanyador = false;
+        for (int m = 0; m < tauler.tauler.length; m++) {
+        }
+        if (guanyador == true){ tauler.resultat =0;}
+        else {tauler.resultat = 1;}
 
         //La resposta és el tauler amb les dades de tots els jugadors
         ByteArrayOutputStream os = new ByteArrayOutputStream();

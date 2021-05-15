@@ -35,4 +35,5 @@ class Jugada implements Serializable {
     public static final long serialVersionUID = 1L;
     String Nom;
     int num;
+    String marca;
 }
