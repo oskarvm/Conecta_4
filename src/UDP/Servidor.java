@@ -12,7 +12,6 @@ public class Servidor {
 
     DatagramSocket socket;
     int port, fi, acabats, multiport=5557;
-    NombreSecret ns;
     boolean acabat;
     Tauler tauler;
     MulticastSocket multisocket;
@@ -29,7 +28,6 @@ public class Servidor {
         }
 
         this.port = port;
-        ns = new NombreSecret(max);
         tauler = new Tauler();
         acabat = false;
         acabats = 0;
