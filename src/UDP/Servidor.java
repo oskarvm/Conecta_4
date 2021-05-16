@@ -69,7 +69,10 @@ public class Servidor {
             System.out.println("jugada:" + j.Nom + " " + j.num);
             //Si no existeix el jugador a la llista és un jugador nou
             //per tant l'afegim i inicialitzem les tirades
-            if(!tauler.map_jugadors.containsKey(j.Nom)) tauler.map_jugadors.put(j.Nom, 1);
+
+            if(!tauler.map_jugadors.containsKey(j.Nom)) {
+                tauler.map_jugadors.put(j.Nom, 1);
+            }
             else {
                 //Si el judador ja esxiteix, actualitzem la quatitat de tirades
                 int tirades = tauler.map_jugadors.get(j.Nom) + 1;
@@ -90,10 +93,11 @@ public class Servidor {
             }
         }
         //comprovació
+//        boolean guanyador = verificarguanyador(j);
         boolean guanyador = false;
         for (int m = 0; m < tauler.tauler.length; m++) {
         }
-        if (guanyador == true){ tauler.resultat =0;}
+        if (guanyador){ tauler.resultat =0;}
         else {tauler.resultat = 1;}
 
         //La resposta és el tauler amb les dades de tots els jugadors
@@ -107,6 +111,39 @@ public class Servidor {
         }
         byte[] resposta = os.toByteArray();
         return resposta;
+    }
+
+    private boolean verificarguanyador(Jugada x) {
+
+        for (int i = 1; i < tauler.tauler.length; i++) { //horizontal
+            for (int m = 0; m < 7 - 3; m++) {
+                if (tauler.tauler[i][m].equals(x.marca) && tauler.tauler[i][m + 1].equals(x.marca) && tauler.tauler[i][m + 2].equals(x.marca) && tauler.tauler[i][m + 3].equals(x.marca)) {
+                    return true;
+                }
+            }
+        }
+        for (int i = 0; i < tauler.tauler.length; i++) {//vertical
+            for (int j = 0; j < 7-3; j++) {
+                if (tauler.tauler[j][i].equals(x.marca) && tauler.tauler[j + 1][i].equals(x.marca) && tauler.tauler[j + 2][i].equals(x.marca) && tauler.tauler[j + 3][i].equals(x.marca)) {
+                    return true;
+                }
+            }
+        }
+        for (int i = 0; i < tauler.tauler.length - 4 + 1; i++) { //diagonal
+            for (int j = 0; j < 7-4+1; j++) {
+                if (tauler.tauler[j][i].equals(x.marca) && tauler.tauler[j+1][i+1].equals(x.marca) && tauler.tauler[j+2][i+2].equals(x.marca) && tauler.tauler[j+3][i+3].equals(x.marca)) {
+                    return true;
+                }
+            }
+        }
+        for (int i = tauler.tauler.length; i > 3; i--) {
+            for (int j = 0; j < 7-3; j++) {
+                if (tauler.tauler[j][i - 1].equals(x.marca) && tauler.tauler[j + 1][i - 2].equals(x.marca) && tauler.tauler[j + 2][i - 3].equals(x.marca) && tauler.tauler[j + 3][i - 4].equals(x.marca)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) throws SocketException, IOException {

@@ -124,6 +124,7 @@ public class Client {
             }
             System.out.println(" ----------------------------");
             t.map_jugadors.forEach((k,v)-> System.out.println("Tirada de: " + k + "->" + v));
+            System.out.println(j.torn);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -148,43 +149,43 @@ public class Client {
         return t.resultat;
     }
 
-
-    public int getResult() {
-        return result;
-    }
-
-    public void setResult(int result) {
-        this.result = result;
-    }
-
     public static void main(String[] args) {
         String jugador, ipSrv, marca;
+        int opcio;
+        boolean continuar=true;
 
         //Demanem la ip del servidor i nom del jugador
         System.out.println("IP del servidor?");
         Scanner sip = new Scanner(System.in);
         ipSrv = sip.next();
-        System.out.println("Nom jugador:");
-        jugador = sip.next();
-        System.out.println("Marca casella:");
-        marca = sip.next();
 
-        Client cAdivina = new Client(ipSrv, 5556);
+        while (continuar) {
+            System.out.println("1- Jugar");
+            System.out.println("2- Sortir");
+            opcio = sip.nextInt();
+            switch (opcio) {
+                case 1:
+                    System.out.println("Nom jugador:");
+                    jugador = sip.next();
+                    System.out.println("Marca casella:");
+                    marca = sip.next();
 
-        cAdivina.setNom(jugador);
-        cAdivina.marca = marca;
-        try {
-            cAdivina.runClient();
-        } catch (IOException e) {
-            e.printStackTrace();
+                    Client cAdivina = new Client(ipSrv, 5556);
+
+                    cAdivina.setNom(jugador);
+                    cAdivina.marca = marca;
+                    try {
+                        cAdivina.runClient();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case 2:
+                    continuar = false;
+                    break;
+            }
         }
 
-        if(cAdivina.getResult() == 0) {
-            System.out.println("Fi, ho has aconseguit amb "+ cAdivina.t.map_jugadors.get(jugador) +" intents");
-            cAdivina.t.map_jugadors.forEach((k,v)-> System.out.println(k + "->" + v));
-        } else {
-            System.out.println("Has perdut");
-        }
     }
 
 }

@@ -36,4 +36,5 @@ class Jugada implements Serializable {
     String Nom;
     int num;
     String marca;
+    boolean torn;
 }
