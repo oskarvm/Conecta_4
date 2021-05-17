@@ -90,21 +90,23 @@ public class Servidor {
         }
 
         //afegir al tauler
-        if (j.num >0 && j.num<8) {
-            for (int i=tauler.tauler.length-1; i>=0;i--) {
-                if (tauler.tauler[i][j.num - 1].equals(" ~ ")) {
-                    tauler.tauler[i][j.num - 1] = " "+j.marca+" ";
-                    break;
+        if(tauler.map_jugadors_control_tiradas.get(j.Nom)){
+            if (j.num >0 && j.num<8) {
+                for (int i=tauler.tauler.length-1; i>=0;i--) {
+                    if (tauler.tauler[i][j.num - 1].equals(" ~ ")) {
+                        tauler.tauler[i][j.num - 1] = " "+j.marca+" ";
+                        break;
+                    }
                 }
             }
+            tauler.map_jugadors_control_tiradas.forEach((k,v)-> {
+                if (tauler.map_jugadors_control_tiradas.get(k)){
+                    tauler.map_jugadors_control_tiradas.put(k,false);
+                }else{
+                    tauler.map_jugadors_control_tiradas.put(k,true);
+                }
+            });
         }
-
-        tauler.map_jugadors_control_tiradas.forEach((k,v)-> {
-            if (tauler.map_jugadors_control_tiradas.get(k)){
-                tauler.map_jugadors_control_tiradas.put(k,false);
-            }else tauler.map_jugadors_control_tiradas.put(k,true);
-        });
-
         //comprovació
 //        boolean guanyador = verificarguanyador(j);
         boolean guanyador = false;
