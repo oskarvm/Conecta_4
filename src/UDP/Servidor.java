@@ -100,10 +100,10 @@ public class Servidor {
                 }
             }
             tauler.map_jugadors_control_tiradas.forEach((k,v)-> {
-                if (tauler.map_jugadors_control_tiradas.get(k)){
-                    tauler.map_jugadors_control_tiradas.put(k,false);
+                if (!tauler.map_jugadors_control_tiradas.get(k)){
+                    tauler.map_jugadors_control_tiradas.replace(k,true);
                 }else{
-                    tauler.map_jugadors_control_tiradas.put(k,true);
+                    tauler.map_jugadors_control_tiradas.replace(k,false);
                 }
             });
         }
