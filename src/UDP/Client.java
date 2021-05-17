@@ -124,7 +124,11 @@ public class Client {
             }
             System.out.println(" ----------------------------");
             t.map_jugadors.forEach((k,v)-> System.out.println("Tirada de: " + k + "->" + v));
-            System.out.println(j.torn);
+            t.map_jugadors_control_tiradas.forEach((k,v)-> {
+                if (t.map_jugadors_control_tiradas.get(k)){
+                    System.out.println("Torn de: " + k);
+                }
+            });
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -154,24 +158,22 @@ public class Client {
         int opcio;
         boolean continuar=true;
 
-        //Demanem la ip del servidor i nom del jugador
-        System.out.println("IP del servidor?");
-        Scanner sip = new Scanner(System.in);
-        ipSrv = sip.next();
-
         while (continuar) {
+            Scanner sip = new Scanner(System.in);
             System.out.println("1- Jugar");
             System.out.println("2- Sortir");
             opcio = sip.nextInt();
+
             switch (opcio) {
-                case 1:
+                case 1 -> {
+                    //Demanem la ip del servidor i nom del jugador
+                    System.out.println("IP del servidor?");
+                    ipSrv = sip.next();
                     System.out.println("Nom jugador:");
                     jugador = sip.next();
                     System.out.println("Marca casella:");
                     marca = sip.next();
-
                     Client cAdivina = new Client(ipSrv, 5556);
-
                     cAdivina.setNom(jugador);
                     cAdivina.marca = marca;
                     try {
@@ -179,10 +181,8 @@ public class Client {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    break;
-                case 2:
-                    continuar = false;
-                    break;
+                }
+                case 2 -> continuar = false;
             }
         }
 
