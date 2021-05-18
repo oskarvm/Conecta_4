@@ -107,7 +107,6 @@ public class Servidor {
 
         //comprovació
         boolean guanyador = verificarguanyador(j);
-//        boolean guanyador = false;
         for (int m = 0; m < tauler.tauler.length; m++) {
         }
         if (guanyador){ tauler.resultat =0;}

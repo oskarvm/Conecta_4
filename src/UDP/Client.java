@@ -14,6 +14,11 @@ public class Client {
      *  resta de jugadors
      **/
 
+
+
+    public static final String TEXT_RESET = "\u001B[0m";
+    public static final String TEXT_BLUE = "\u001B[34m";
+
     private int portDesti;
     private int result;
     private String Nom, ipSrv, marca;
@@ -115,10 +120,10 @@ public class Client {
             ObjectInputStream ois = new ObjectInputStream(in);
             t = (Tauler) ois.readObject();
             for (int i = 0; i < t.tauler.length; ++i) {
-                System.out.print("|");
+                System.out.print(TEXT_BLUE + "|" + TEXT_RESET);
                 for(int j = 0; j < t.tauler[i].length; ++j) {
                     System.out.print(t.tauler[i][j]+"");
-                    System.out.print("|");
+                    System.out.print(TEXT_BLUE + "|" + TEXT_RESET);
                 }
                 System.out.println("");
             }
