@@ -55,7 +55,7 @@ public class Servidor {
             DatagramPacket multipacket = new DatagramPacket(sendingData, sendingData.length,
                     multicastIp,multiport);
             multisocket.send(multipacket);
-        }
+            }
         socket.close();
     }
 
@@ -67,18 +67,17 @@ public class Servidor {
             ObjectInputStream ois = new ObjectInputStream(in);
             j = (Jugada) ois.readObject();
             System.out.println("jugada:" + j.Nom + " " + j.num);
-            //Si no existeix el jugador a la llista és un jugador nou
-            //per tant l'afegim i inicialitzem les tirades
 
             if(!tauler.map_jugadors.containsKey(j.Nom)) {
                 tauler.map_jugadors.put(j.Nom, 1);
             }
             else {
-                //Si el judador ja esxiteix, actualitzem la quatitat de tirades
+                //Si el judador ja existeix, actualitzem la quatitat de tirades
                 int tirades = tauler.map_jugadors.get(j.Nom) + 1;
                 tauler.map_jugadors.put(j.Nom, tirades);
             }
 
+            //GESTIO DE TORNS
             if(!tauler.map_jugadors_control_tiradas.containsKey(j.Nom)) {
                 if (tauler.map_jugadors_control_tiradas.size() % 2 == 0){
                     tauler.map_jugadors_control_tiradas.put(j.Nom, true);
@@ -99,6 +98,8 @@ public class Servidor {
                     }
                 }
             }
+
+            //actualitzar las tiradas
             tauler.map_jugadors_control_tiradas.forEach((k,v)-> {
                 if (!tauler.map_jugadors_control_tiradas.get(k)){
                     tauler.map_jugadors_control_tiradas.replace(k,true);
@@ -107,6 +108,7 @@ public class Servidor {
                 }
             });
         }
+
         //comprovació
 //        boolean guanyador = verificarguanyador(j);
         boolean guanyador = false;
