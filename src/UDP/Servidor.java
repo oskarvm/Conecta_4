@@ -79,39 +79,35 @@ public class Servidor {
 
             //GESTIO DE TORNS
             if(!tauler.map_jugadors_control_tiradas.containsKey(j.Nom)) {
-                if (tauler.map_jugadors_control_tiradas.size() % 2 == 0){
-                    tauler.map_jugadors_control_tiradas.put(j.Nom, true);
+                tauler.map_jugadors_control_tiradas.put(j.Nom, true);
                 }else tauler.map_jugadors_control_tiradas.put(j.Nom, false);
-            }
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
         //afegir al tauler
-        if(tauler.map_jugadors_control_tiradas.get(j.Nom)){
-            if (j.num >0 && j.num<8) {
-                for (int i=tauler.tauler.length-1; i>=0;i--) {
-                    if (tauler.tauler[i][j.num - 1].equals(" ~ ")) {
-                        tauler.tauler[i][j.num - 1] = " "+j.marca+" ";
-                        break;
-                    }
+        if (j.num<8 && j.num>0){
+            for (int i=tauler.tauler.length-1; i>=0;i--) {
+                if (tauler.tauler[i][j.num - 1].equals(" ~ ")) {
+                    tauler.tauler[i][j.num - 1] = " "+j.marca+" ";
+                    break;
                 }
             }
-
-            //actualitzar las tiradas
-            tauler.map_jugadors_control_tiradas.forEach((k,v)-> {
-                if (!tauler.map_jugadors_control_tiradas.get(k)){
-                    tauler.map_jugadors_control_tiradas.replace(k,true);
-                }else{
-                    tauler.map_jugadors_control_tiradas.replace(k,false);
-                }
-            });
         }
 
+        //actualitzar las tiradas
+        tauler.map_jugadors_control_tiradas.forEach((k,v)-> {
+            if (!tauler.map_jugadors_control_tiradas.get(k)){
+                tauler.map_jugadors_control_tiradas.replace(k,true);
+            }else{
+                tauler.map_jugadors_control_tiradas.replace(k,false);
+            }
+        });
+
         //comprovació
-//        boolean guanyador = verificarguanyador(j);
-        boolean guanyador = false;
+        boolean guanyador = verificarguanyador(j);
+//        boolean guanyador = false;
         for (int m = 0; m < tauler.tauler.length; m++) {
         }
         if (guanyador){ tauler.resultat =0;}
@@ -132,34 +128,34 @@ public class Servidor {
 
     private boolean verificarguanyador(Jugada x) {
 
-//        for (int i = 1; i < tauler.tauler.length; i++) { //horizontal
-//            for (int m = 0; m < 7 - 3; m++) {
-//                if (tauler.tauler[i][m].equals(x.marca) && tauler.tauler[i][m + 1].equals(x.marca) && tauler.tauler[i][m + 2].equals(x.marca) && tauler.tauler[i][m + 3].equals(x.marca)) {
-//                    return true;
-//                }
-//            }
-//        }
-//        for (int i = 0; i < tauler.tauler.length; i++) {//vertical
-//            for (int j = 0; j < 7-3; j++) {
-//                if (tauler.tauler[j][i].equals(x.marca) && tauler.tauler[j + 1][i].equals(x.marca) && tauler.tauler[j + 2][i].equals(x.marca) && tauler.tauler[j + 3][i].equals(x.marca)) {
-//                    return true;
-//                }
-//            }
-//        }
-//        for (int i = 0; i < tauler.tauler.length - 4 + 1; i++) { //diagonal
-//            for (int j = 0; j < 7-4+1; j++) {
-//                if (tauler.tauler[j][i].equals(x.marca) && tauler.tauler[j+1][i+1].equals(x.marca) && tauler.tauler[j+2][i+2].equals(x.marca) && tauler.tauler[j+3][i+3].equals(x.marca)) {
-//                    return true;
-//                }
-//            }
-//        }
-//        for (int i = tauler.tauler.length; i > 3; i--) {
-//            for (int j = 0; j < 7-3; j++) {
-//                if (tauler.tauler[j][i - 1].equals(x.marca) && tauler.tauler[j + 1][i - 2].equals(x.marca) && tauler.tauler[j + 2][i - 3].equals(x.marca) && tauler.tauler[j + 3][i - 4].equals(x.marca)) {
-//                    return true;
-//                }
-//            }
-//        }
+        for (int i = 1; i < tauler.tauler.length; i++) { //horizontal
+            for (int m = 0; m < 6-2; m++) {
+                if (tauler.tauler[i][m].equals(" "+ x.marca + " ") && tauler.tauler[i][m + 1].equals(" "+ x.marca + " ") && tauler.tauler[i][m + 2].equals(" "+ x.marca + " ") && tauler.tauler[i][m + 3].equals(" "+ x.marca + " ")) {
+                    return true;
+                }
+            }
+        }
+        for (int i = 0; i < tauler.tauler.length; i++) {//vertical
+            for (int j = 0; j < 6-2; j++) {
+                if (tauler.tauler[j][i].equals(" "+ x.marca + " ") && tauler.tauler[j + 1][i].equals(" "+ x.marca + " ") && tauler.tauler[j + 2][i].equals(" "+ x.marca + " ") && tauler.tauler[j + 3][i].equals(" "+ x.marca + " ")) {
+                    return true;
+                }
+            }
+        }
+        for (int i = 0; i < tauler.tauler.length - 4 + 1; i++) { //diagonal
+            for (int j = 0; j < 6-3+1; j++) {
+                if (tauler.tauler[j][i].equals(" "+ x.marca + " ") && tauler.tauler[j+1][i+1].equals(" "+ x.marca + " ") && tauler.tauler[j+2][i+2].equals(" "+ x.marca + " ") && tauler.tauler[j+3][i+3].equals(" "+ x.marca + " ")) {
+                    return true;
+                }
+            }
+        }
+        for (int i = tauler.tauler.length; i > 3; i--) {
+            for (int j = 0; j < 6-2; j++) {
+                if (tauler.tauler[j][i - 1].equals(" "+ x.marca + " ") && tauler.tauler[j + 1][i - 2].equals(" "+ x.marca + " ") && tauler.tauler[j + 2][i - 3].equals(" "+ x.marca + " ") && tauler.tauler[j + 3][i - 4].equals(" "+ x.marca + " ")) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 

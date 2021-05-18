@@ -146,7 +146,7 @@ public class Client {
         setTauler(data);
         String msg = null;
         switch (t.resultat) {
-            case 0: msg = "Has guanyat"; break;
+            case 0: msg = "Has guanyat"; System.exit(0); break;
             case 1: msg = "Continua jugant"; break;
         }
         System.out.println(msg);
