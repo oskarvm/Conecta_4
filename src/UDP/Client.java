@@ -128,16 +128,12 @@ public class Client {
                 System.out.println("");
             }
             System.out.println(" ----------------------------");
-            t.map_jugadors.forEach((k,v)-> System.out.println("Tirada de: " + k + "->" + v));
             t.map_jugadors_control_tiradas.forEach((k,v)-> {
-//                if (t.map_jugadors_control_tiradas.get(k)){
-                    System.out.println("Torn de: " + k+" : " +v);
-//                }
+                    System.out.println("Torn --> " + k+" : " +v);
             });
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     private boolean printData(byte[] data) {

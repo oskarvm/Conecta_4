@@ -77,33 +77,33 @@ public class Servidor {
                 tauler.map_jugadors.put(j.Nom, tirades);
             }
 
-            //GESTIO DE TORNS
+            //GESTIO DE TORNS init
             if(!tauler.map_jugadors_control_tiradas.containsKey(j.Nom)) {
                 tauler.map_jugadors_control_tiradas.put(j.Nom, true);
-                }else tauler.map_jugadors_control_tiradas.put(j.Nom, false);
+            }
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        //afegir al tauler
-        if (j.num<8 && j.num>0){
-            for (int i=tauler.tauler.length-1; i>=0;i--) {
-                if (tauler.tauler[i][j.num - 1].equals(" ~ ")) {
-                    tauler.tauler[i][j.num - 1] = " "+j.marca+" ";
-                    break;
+        if(tauler.map_jugadors_control_tiradas.get(j.Nom)){
+            //afegir al tauler
+            if (j.num<8 && j.num>0){
+                for (int i=tauler.tauler.length-1; i>=0;i--) {
+                    if (tauler.tauler[i][j.num - 1].equals(" ~ ")) {
+                        tauler.tauler[i][j.num - 1] = " "+j.marca+" ";
+                        break;
+                    }
                 }
             }
         }
 
         //actualitzar las tiradas
-        tauler.map_jugadors_control_tiradas.forEach((k,v)-> {
-            if (!tauler.map_jugadors_control_tiradas.get(k)){
-                tauler.map_jugadors_control_tiradas.replace(k,true);
-            }else{
-                tauler.map_jugadors_control_tiradas.replace(k,false);
-            }
-        });
+        if (tauler.map_jugadors_control_tiradas.get(j.Nom)){
+            tauler.map_jugadors_control_tiradas.replace(j.Nom,false);
+        }else{
+            tauler.map_jugadors_control_tiradas.replace(j.Nom,true);
+        }
 
         //comprovació
         boolean guanyador = verificarguanyador(j);
@@ -148,7 +148,7 @@ public class Servidor {
                 }
             }
         }
-        for (int i = tauler.tauler.length; i > 3; i--) {
+        for (int i = tauler.tauler.length; i > 3; i--) { //diagonal 2
             for (int j = 0; j < 6-2; j++) {
                 if (tauler.tauler[j][i - 1].equals(" "+ x.marca + " ") && tauler.tauler[j + 1][i - 2].equals(" "+ x.marca + " ") && tauler.tauler[j + 2][i - 3].equals(" "+ x.marca + " ") && tauler.tauler[j + 3][i - 4].equals(" "+ x.marca + " ")) {
                     return true;
