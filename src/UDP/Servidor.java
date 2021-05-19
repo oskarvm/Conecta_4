@@ -63,6 +63,7 @@ public class Servidor {
     private byte[] processData(byte[] data, int length) {
         Jugada j = null;
         ByteArrayInputStream in = new ByteArrayInputStream(data);
+        boolean createplayer = false;
         try {
             ObjectInputStream ois = new ObjectInputStream(in);
             j = (Jugada) ois.readObject();
@@ -70,6 +71,7 @@ public class Servidor {
 
             if(!tauler.map_jugadors.containsKey(j.Nom)) {
                 tauler.map_jugadors.put(j.Nom, 1);
+                createplayer = true;
             }
             else {
                 //Si el judador ja existeix, actualitzem la quatitat de tirades
@@ -77,32 +79,26 @@ public class Servidor {
                 tauler.map_jugadors.put(j.Nom, tirades);
             }
 
-            //GESTIO DE TORNS init
-            if(!tauler.map_jugadors_control_tiradas.containsKey(j.Nom)) {
-                tauler.map_jugadors_control_tiradas.put(j.Nom, true);
-            }
-
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        if (createplayer){
+            if (tauler.map_jugadors.size() % 2 == 0){
+                j.torn = 0;
+            }else j.torn = 1;
+        }
 
-        if(tauler.map_jugadors_control_tiradas.get(j.Nom)){
+        if(tauler.num_tiradas % 2 == j.torn){
             //afegir al tauler
             if (j.num<8 && j.num>0){
                 for (int i=tauler.tauler.length-1; i>=0;i--) {
                     if (tauler.tauler[i][j.num - 1].equals(" ~ ")) {
                         tauler.tauler[i][j.num - 1] = " "+j.marca+" ";
+                        tauler.num_tiradas++;
                         break;
                     }
                 }
             }
-        }
-
-        //actualitzar las tiradas
-        if (tauler.map_jugadors_control_tiradas.get(j.Nom)){
-            tauler.map_jugadors_control_tiradas.replace(j.Nom,false);
-        }else{
-            tauler.map_jugadors_control_tiradas.replace(j.Nom,true);
         }
 
         //comprovació

@@ -7,8 +7,7 @@ import java.util.Map;
 public class Tauler implements Serializable {
     public static final long serialVersionUID = 1L;
     public Map<String,Integer> map_jugadors;
-    public Map<String,Boolean> map_jugadors_control_tiradas;
-    public int resultat = 3, acabats;
+    public int resultat = 3, acabats, num_tiradas;
 
     String[][] tauler = { {" 1 "," 2 "," 3 "," 4 "," 5 "," 6 "," 7 "},{" ~ ", " ~ ", " ~ ", " ~ ", " ~ ", " ~ ", " ~ "},
             {" ~ ", " ~ ", " ~ ", " ~ ", " ~ ", " ~ ", " ~ "},{" ~ ", " ~ ", " ~ ", " ~ ", " ~ ", " ~ ", " ~ "},
@@ -17,8 +16,8 @@ public class Tauler implements Serializable {
 
     public Tauler() {
         map_jugadors = new HashMap<>();
-        map_jugadors_control_tiradas = new HashMap<>();
         acabats = 0;
+        num_tiradas = 0;
     }
     public int getNumPlayers() {
         return map_jugadors.size();
@@ -31,6 +30,12 @@ public class Tauler implements Serializable {
         map_jugadors.forEach((k,v) -> sb.append(k + " - " + v + "\n"));
         return sb.toString();
     }
+
+    public int turno(){
+        if (num_tiradas % 2 == 0){
+            return 1;
+        }else return 0;
+    }
 }
 
 class Jugada implements Serializable {
@@ -38,5 +43,5 @@ class Jugada implements Serializable {
     String Nom;
     int num;
     String marca;
-    boolean torn;
+    int torn;
 }

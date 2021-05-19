@@ -65,6 +65,7 @@ public class Client {
         DatagramPacket packet;
         DatagramSocket socket = new DatagramSocket();
         //Missatge de benvinguda
+        System.out.println("Ets el jugador ");
         System.out.println("Hola " + Nom + "! Comencem!");
         //Bucle de joc
         while(result!=0) {
@@ -128,9 +129,8 @@ public class Client {
                 System.out.println("");
             }
             System.out.println(" ----------------------------");
-            t.map_jugadors_control_tiradas.forEach((k,v)-> {
-                    System.out.println("Torn --> " + k+" : " +v);
-            });
+            System.out.println(t.num_tiradas);
+            System.out.println(j.torn);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
