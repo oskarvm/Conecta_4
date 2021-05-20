@@ -41,7 +41,7 @@ public class Servidor {
         int clientPort;
 
         //el servidor atén el port mentre hi hagi jugadors
-        while(acabats < tauler.map_jugadors.size() || acabats==0){
+        while(!acabat){
             DatagramPacket packet = new DatagramPacket(receivingData, receivingData.length);
             socket.receive(packet);
             sendingData = processData(packet.getData(), packet.getLength());
@@ -117,6 +117,7 @@ public class Servidor {
         for (int i = 1; i < tauler.tauler.length; i++) { //horizontal
             for (int m = 0; m < 6-2; m++) {
                 if (tauler.tauler[i][m].equals(" "+ x.marca + " ") && tauler.tauler[i][m + 1].equals(" "+ x.marca + " ") && tauler.tauler[i][m + 2].equals(" "+ x.marca + " ") && tauler.tauler[i][m + 3].equals(" "+ x.marca + " ")) {
+                    acabat =true;
                     return true;
                 }
             }
@@ -124,6 +125,7 @@ public class Servidor {
         for (int i = 0; i < tauler.tauler.length; i++) {//vertical
             for (int j = 0; j < 6-2; j++) {
                 if (tauler.tauler[j][i].equals(" "+ x.marca + " ") && tauler.tauler[j + 1][i].equals(" "+ x.marca + " ") && tauler.tauler[j + 2][i].equals(" "+ x.marca + " ") && tauler.tauler[j + 3][i].equals(" "+ x.marca + " ")) {
+                    acabat =true;
                     return true;
                 }
             }
@@ -131,6 +133,7 @@ public class Servidor {
         for (int i = 0; i < tauler.tauler.length - 4 + 1; i++) { //diagonal
             for (int j = 0; j < 6-3+1; j++) {
                 if (tauler.tauler[j][i].equals(" "+ x.marca + " ") && tauler.tauler[j+1][i+1].equals(" "+ x.marca + " ") && tauler.tauler[j+2][i+2].equals(" "+ x.marca + " ") && tauler.tauler[j+3][i+3].equals(" "+ x.marca + " ")) {
+                    acabat =true;
                     return true;
                 }
             }
@@ -138,6 +141,7 @@ public class Servidor {
         for (int i = tauler.tauler.length; i > 3; i--) { //diagonal 2
             for (int j = 0; j < 6-2; j++) {
                 if (tauler.tauler[j][i - 1].equals(" "+ x.marca + " ") && tauler.tauler[j + 1][i - 2].equals(" "+ x.marca + " ") && tauler.tauler[j + 2][i - 3].equals(" "+ x.marca + " ") && tauler.tauler[j + 3][i - 4].equals(" "+ x.marca + " ")) {
+                    acabat =true;
                     return true;
                 }
             }
