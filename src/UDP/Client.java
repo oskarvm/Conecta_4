@@ -14,15 +14,12 @@ public class Client {
      *  resta de jugadors
      **/
 
-
-
     public static final String TEXT_RESET = "\u001B[0m";
     public static final String TEXT_BLUE = "\u001B[34m";
 
     private int portDesti;
     private int result;
     private String Nom, ipSrv, marca;
-    private int intents;
     private InetAddress adrecaDesti;
     private Tauler t;
     private Jugada j;
@@ -37,7 +34,6 @@ public class Client {
     public Client(String ip, int port) {
         this.portDesti = port;
         result = -1;
-        intents = 0;
         ipSrv = ip;
         j= new Jugada();
         try {
@@ -53,10 +49,6 @@ public class Client {
 
     public void setNom(String n) {
         Nom=n;
-    }
-
-    public int getIntents () {
-        return intents;
     }
 
     public void runClient() throws IOException {
