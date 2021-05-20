@@ -129,9 +129,13 @@ public class Client {
                 System.out.println("");
             }
             System.out.println(" ----------------------------");
-            System.out.println(t.num_tiradas);
-            System.out.println(j.torn);
-        } catch (IOException | ClassNotFoundException e) {
+            if(t.num_tiradas % 2 == t.map_jugadors.get(j.Nom)) {
+                System.out.println("torn de: "+j.Nom);
+            }else {
+                System.out.println("No es el teu torn");
+            }
+            System.out.println("Prem 0 per imprimir el taulell");
+            } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

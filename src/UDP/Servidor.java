@@ -63,32 +63,23 @@ public class Servidor {
     private byte[] processData(byte[] data, int length) {
         Jugada j = null;
         ByteArrayInputStream in = new ByteArrayInputStream(data);
-        boolean createplayer = false;
+
         try {
             ObjectInputStream ois = new ObjectInputStream(in);
             j = (Jugada) ois.readObject();
             System.out.println("jugada:" + j.Nom + " " + j.num);
 
             if(!tauler.map_jugadors.containsKey(j.Nom)) {
-                tauler.map_jugadors.put(j.Nom, 1);
-                createplayer = true;
-            }
-            else {
-                //Si el judador ja existeix, actualitzem la quatitat de tirades
-                int tirades = tauler.map_jugadors.get(j.Nom) + 1;
-                tauler.map_jugadors.put(j.Nom, tirades);
+                if (tauler.map_jugadors.size()%2 == 0){
+                    tauler.map_jugadors.put(j.Nom, 1);
+                }else tauler.map_jugadors.put(j.Nom, 0);
             }
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        if (createplayer){
-            if (tauler.map_jugadors.size() % 2 == 0){
-                j.torn = 0;
-            }else j.torn = 1;
-        }
 
-        if(tauler.num_tiradas % 2 == j.torn){
+        if(tauler.num_tiradas % 2 == tauler.map_jugadors.get(j.Nom)){
             //afegir al tauler
             if (j.num<8 && j.num>0){
                 for (int i=tauler.tauler.length-1; i>=0;i--) {

@@ -8,6 +8,7 @@ public class Tauler implements Serializable {
     public static final long serialVersionUID = 1L;
     public Map<String,Integer> map_jugadors;
     public int resultat = 3, acabats, num_tiradas;
+    boolean createplayer;
 
     String[][] tauler = { {" 1 "," 2 "," 3 "," 4 "," 5 "," 6 "," 7 "},{" ~ ", " ~ ", " ~ ", " ~ ", " ~ ", " ~ ", " ~ "},
             {" ~ ", " ~ ", " ~ ", " ~ ", " ~ ", " ~ ", " ~ "},{" ~ ", " ~ ", " ~ ", " ~ ", " ~ ", " ~ ", " ~ "},
